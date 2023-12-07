@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tax Calculator</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(to right, #3494e6, #ec6ead);
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        #calculator {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        h2 {
+            color: #3494e6;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        input {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 20px;
+            box-sizing: border-box;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            outline: none;
+        }
+
+        button {
+            background-color: #ec6ead;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #d754a7;
+        }
+
+        #result {
+            color: #dc3545;
+            font-size: 20px;
+            margin-top: 20px;
+        }
+
+        #loading {
+            display: none;
+            color: #28a745;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="calculator">
+    <h2>Tax Calculator</h2>
+    <label for="income">Income:</label>
+    <input type="number" id="income" placeholder="Enter your income">
+
+    <label for="taxRate">Tax Rate (%):</label>
+    <input type="number" id="taxRate" placeholder="Enter the tax rate">
+
+    <button onclick="calculateTax()">Calculate Tax</button>
+    <span id="loading">Calculating...</span>
+
+    <h3 id="result">Tax: &#8360;0</h3>
+</div>
+
+<script>
+    function calculateTax() {
+        var income = document.getElementById("income").value;
+        var taxRate = document.getElementById("taxRate").value;
+
+        if (income === "" || taxRate === "") {
+            alert("Please enter both income and tax rate.");
+            return;
+        }
+
+        document.getElementById("loading").style.display = "inline";
+        setTimeout(function () {
+            income = parseFloat(income);
+            taxRate = parseFloat(taxRate);
+
+            if (isNaN(income) || isNaN(taxRate)) {
+                alert("Please enter valid numbers.");
+                document.getElementById("loading").style.display = "none";
+                return;
+            }
+
+            var tax = (income * (taxRate / 100)).toFixed(2);
+
+            document.getElementById("result").innerText = "Tax: Rs" + tax;
+            document.getElementById("loading").style.display = "none";
+            clearInputFields();
+        }, 1000);
+    }
+
+    function clearInputFields() {
+        document.getElementById("income").value = "";
+        document.getElementById("taxRate").value = "";
+    }
+</script>
+
+</body>
+</html>
